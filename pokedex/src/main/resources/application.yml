@@ -1,0 +1,3 @@
+url-pokedex:
+ principal: 'https://pokeapi.co/'
+ pokemonss-existing: '/api/v2/pokemon-species'
