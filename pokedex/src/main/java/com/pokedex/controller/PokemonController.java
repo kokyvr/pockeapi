@@ -1,5 +1,9 @@
 package com.pokedex.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -9,13 +13,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.pokedex.dto.EvolvesTo;
 import com.pokedex.dto.EvolvesToDto;
 import com.pokedex.dto.PaginationDto;
 import com.pokedex.dto.PokemonSpeciesDto;
-import com.pokedex.dto.Ruta;
+import com.pokedex.dto.ResultDto;
+import com.pokedex.dto.Species;
 import com.pokedex.service.PokemonService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -43,8 +48,10 @@ public class PokemonController {
 	 * return new ResponseEntity<PokemonSpeciesDto>(pokemonDto,HttpStatus.OK); }
 	 */
 	
+	private List<Species> species = new ArrayList<Species>();
+	
 	@PostMapping(path = "/especies")
-	public ResponseEntity<EvolvesToDto> getPokomenEspecies(@RequestBody Ruta url){
+	public ResponseEntity<EvolvesToDto> getPokomenEspecies(@RequestParam String url){
 		EvolvesToDto dto = new EvolvesToDto();
 		log.info("ruta {}",url);
 		try {
@@ -63,7 +70,6 @@ public class PokemonController {
 		PokemonSpeciesDto pokemonDto = new PokemonSpeciesDto();
 		PaginationDto paginationDto = new PaginationDto();
 		String url = urlprincipal + urlspecimens;
-
 		pokemonDto = this.pokemonService.findPokemons(url);
 		paginationDto.setNext(pokemonDto.getNext());
 		paginationDto.setPrevious(pokemonDto.getPrevious());
@@ -100,4 +106,35 @@ public class PokemonController {
 		return "listPokemons";
 	}
 
+	@PostMapping("evolucion")
+	public String evolucion(@ModelAttribute("pokemon") ResultDto pokemon,Model model) {
+		this.species = new ArrayList<Species>();
+		EvolvesToDto EvolvesToDto = this.pokemonService.getEvolvesToDto(pokemon.getUrl());
+		log.info("url {}",pokemon.getUrl());
+
+		this.species=getEvo(EvolvesToDto.getChain().getEvolves_to());
+		
+		model.addAttribute("especie",EvolvesToDto.getChain().getSpecies());
+		
+		model.addAttribute("especies",this.species);
+		log.info("especies {}",species.toString());
+		//model.addAttribute("chain",EvolvesToDto.getChain());
+		return "verespecimenes";
+	}
+
+	private List<Species> getEvo(List<EvolvesTo>ev) {
+		
+		if(ev.size()>0) {
+			for(EvolvesTo evt:ev) {
+				this.species.add(evt.getSpecies());
+				getEvo(evt.getEvolves_to());
+				//log.info("especies {}",species);
+			
+			}
+		}
+		return this.species;
+		
+		
+	}
+	
 }

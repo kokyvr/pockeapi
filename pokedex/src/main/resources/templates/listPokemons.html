@@ -8,7 +8,7 @@
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 
-<title>Insert title here</title>
+<title>Lista de Pokemones</title>
 </head>
 <body>
 
@@ -45,8 +45,15 @@
 								</tr>
 								<tr th:each="pokemon : ${pokemons}">
 									<td><span th:text="${pokemon.name}"></span></td>
-									<td><a class="btn btn-info" th:href="${pokemon.url}">Ver
-											Evolucion</a></td>
+								
+									<td>
+										<form th:action="@{/evolucion}" th:object="${pokemon}" method="POST" >
+											<input  th:if="${pokemon.name !=null}" th:value="*{name}" name="name"  hidden="true" />
+										<input  th:if="${pokemon.url !=null}" th:value="*{url}" name="url"  hidden="true" />
+										 <input class="btn btn-info"  type="submit" value="Ver Evolucion"/>
+											
+												</form></td>
+										
 								</tr>
 
 							</tbody>

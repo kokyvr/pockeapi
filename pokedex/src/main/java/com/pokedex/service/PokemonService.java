@@ -1,17 +1,16 @@
 package com.pokedex.service;
 
-import com.pokedex.dto.ResponseUrlChainDto;
 import com.pokedex.dto.EvolvesToDto;
 import com.pokedex.dto.PokemonSpeciesDto;
-import com.pokedex.dto.Ruta;
+import com.pokedex.dto.ResponseUrlChainDto;
 
 public interface PokemonService {
 
 	PokemonSpeciesDto findPokemons(String url);
 	
-	ResponseUrlChainDto getObjetPokemonEspecies(Ruta url);
+	ResponseUrlChainDto getObjetPokemonEspecies(String url);
 	
 	
-	EvolvesToDto getEvolvesToDto(Ruta url);
+	EvolvesToDto getEvolvesToDto(String url);
 	
 }

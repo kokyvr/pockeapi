@@ -6,10 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.pokedex.config.RestTemplateClass;
-import com.pokedex.dto.ResponseUrlChainDto;
 import com.pokedex.dto.EvolvesToDto;
 import com.pokedex.dto.PokemonSpeciesDto;
-import com.pokedex.dto.Ruta;
+import com.pokedex.dto.ResponseUrlChainDto;
 import com.pokedex.service.PokemonService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -51,17 +50,17 @@ public class PokemonServiceImpl implements PokemonService {
 	}
 
 	@Override
-	public ResponseUrlChainDto getObjetPokemonEspecies(Ruta url) {
+	public ResponseUrlChainDto getObjetPokemonEspecies(String url) {
 		// TODO Auto-generated method stub
 		
 		
 		return getPokemonEspecies(url);
 	}
-	private ResponseUrlChainDto getPokemonEspecies(Ruta url) {
+	private ResponseUrlChainDto getPokemonEspecies(String url) {
 		ResponseEntity<ResponseUrlChainDto> responseentity= null;
 		ResponseUrlChainDto evolutionDto = new ResponseUrlChainDto();
 		try {
-			responseentity = this.restTemplate.getForEntity(url.getRuta(),ResponseUrlChainDto.class);
+			responseentity = this.restTemplate.getForEntity(url,ResponseUrlChainDto.class);
 			log.info("responseentity {}",responseentity);
 			evolutionDto = responseentity.getBody();
 			log.info("evolutiondto {}",evolutionDto);
@@ -73,7 +72,7 @@ public class PokemonServiceImpl implements PokemonService {
 	}
 
 	@Override
-	public EvolvesToDto getEvolvesToDto(Ruta url) {
+	public EvolvesToDto getEvolvesToDto(String url) {
 		ResponseUrlChainDto EvolutionChainDto = this.getObjetPokemonEspecies(url);
 		
 		ResponseEntity<EvolvesToDto> responseentity = null;
