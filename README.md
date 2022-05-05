@@ -1,6 +1,6 @@
 #PROYECTO CONSUMO DE API - POKEAPI
 ***
-1.Proyecto de consumo de API para lista de Pokemones y paginacion de dicha lista
+1.Proyecto de consumo de API para lista de Pokemones y paginacion de dicha lista y Vista de Cadena de Evolucion de Pokemones
 
 
 ##Tecnologias Usadas 
