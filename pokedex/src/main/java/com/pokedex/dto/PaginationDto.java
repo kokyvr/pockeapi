@@ -6,6 +6,6 @@ import lombok.Data;
 public class PaginationDto {
 
 	private String previous;
-	
+
 	private String next;
 }

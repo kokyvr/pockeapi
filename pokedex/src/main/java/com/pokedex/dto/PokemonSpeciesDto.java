@@ -10,14 +10,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PokemonSpeciesDto {
-	
+
 	private int count;
-	
+
 	private String next;
-	
+
 	private String previous;
-	
+
 	private List<ResultDto> results;
-	
-	
+
 }

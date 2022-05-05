@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class ResultDto {
 
 	private String name;
-	
+
 	private String url;
 }

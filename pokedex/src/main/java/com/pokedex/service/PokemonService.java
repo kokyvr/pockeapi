@@ -4,7 +4,5 @@ import com.pokedex.dto.PokemonSpeciesDto;
 
 public interface PokemonService {
 
-
-	
-	 PokemonSpeciesDto findPokemons(String url);
+	PokemonSpeciesDto findPokemons(String url);
 }
