@@ -24,32 +24,25 @@ public class PokemonServiceImpl implements PokemonService {
 	@Value("${url-pokedex.pokemonss-existing}")
 	private String urlspecimens;
 	
-
+	public static final int limit=10;
+	
 	
 	@Override
-	public PokemonSpeciesDto findPokemons(int offset, int limit) {
-		// TODO Auto-generated method stub
-		String url = this.urlprincipal + urlspecimens;
-		
-		return getListPokemonsExistens(url,offset, limit);
+	public PokemonSpeciesDto findPokemons(String url) {
+	
+		log.info("url {}" ,url);
+		return getListPokemonsExistens(url);
 	}
 	
-	private  PokemonSpeciesDto getListPokemonsExistens(String url, int offset,int limit){
+	private  PokemonSpeciesDto getListPokemonsExistens(String url){
 		ResponseEntity<PokemonSpeciesDto> responseEntity=null;
 		PokemonSpeciesDto pokemonDto = new PokemonSpeciesDto();
 		try {
-			if(offset >0 || limit >0) {
-				 responseEntity =restTemplate.getForEntity(url+"?offsett="+offset+"&limit="+limit, PokemonSpeciesDto.class);
+				 responseEntity =restTemplate.getForEntity(url, PokemonSpeciesDto.class);
 				 pokemonDto = responseEntity.getBody();
 				 log.info("with params : {}",responseEntity.getBody());
 				
 				
-			}else {
-				  responseEntity =restTemplate.getForEntity(url, PokemonSpeciesDto.class);
-				  pokemonDto = responseEntity.getBody();
-				  log.info("with out params : {}",responseEntity.getBody());
-				  
-			}
 		} catch (Exception e) {
 			e.printStackTrace(System.out);
 		}
