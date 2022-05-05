@@ -45,15 +45,19 @@
 								</tr>
 								<tr th:each="pokemon : ${pokemons}">
 									<td><span th:text="${pokemon.name}"></span></td>
-								
+
 									<td>
-										<form th:action="@{/evolucion}" th:object="${pokemon}" method="POST" >
-											<input  th:if="${pokemon.name !=null}" th:value="*{name}" name="name"  hidden="true" />
-										<input  th:if="${pokemon.url !=null}" th:value="*{url}" name="url"  hidden="true" />
-										 <input class="btn btn-info"  type="submit" value="Ver Evolucion"/>
-											
-												</form></td>
-										
+										<form th:action="@{/evolucion}" th:object="${pokemon}"
+											method="POST">
+											<input th:if="${pokemon.name !=null}" th:value="*{name}"
+												name="name" hidden="true" /> <input
+												th:if="${pokemon.url !=null}" th:value="*{url}" name="url"
+												hidden="true" /> <input class="btn btn-info" type="submit"
+												value="Ver Evolucion" />
+
+										</form>
+									</td>
+
 								</tr>
 
 							</tbody>

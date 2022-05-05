@@ -1,7 +1,6 @@
 package com.pokedex.dto;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
 @Data

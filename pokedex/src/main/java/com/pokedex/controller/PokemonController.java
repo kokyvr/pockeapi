@@ -1,13 +1,10 @@
 package com.pokedex.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,23 +44,16 @@ public class PokemonController {
 	 * 
 	 * return new ResponseEntity<PokemonSpeciesDto>(pokemonDto,HttpStatus.OK); }
 	 */
-	
+	/*
+	 * @PostMapping(path = "/especies") public ResponseEntity<EvolvesToDto>
+	 * getPokomenEspecies(@RequestParam String url){ EvolvesToDto dto = new
+	 * EvolvesToDto(); log.info("ruta {}",url); try { dto =
+	 * this.pokemonService.getEvolvesToDto(url); } catch (Exception e) { // TODO:
+	 * handle exception e.printStackTrace(System.out); }
+	 * 
+	 * return new ResponseEntity<EvolvesToDto>(dto,HttpStatus.OK); }
+	 */
 	private List<Species> species = new ArrayList<Species>();
-	
-	@PostMapping(path = "/especies")
-	public ResponseEntity<EvolvesToDto> getPokomenEspecies(@RequestParam String url){
-		EvolvesToDto dto = new EvolvesToDto();
-		log.info("ruta {}",url);
-		try {
-			dto = this.pokemonService.getEvolvesToDto(url);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace(System.out);
-		}
-		
-		return new ResponseEntity<EvolvesToDto>(dto,HttpStatus.OK);
-	}
-	
 
 	@GetMapping
 	public String listPokemons(Model model) {
@@ -107,34 +97,33 @@ public class PokemonController {
 	}
 
 	@PostMapping("evolucion")
-	public String evolucion(@ModelAttribute("pokemon") ResultDto pokemon,Model model) {
+	public String evolucion(@ModelAttribute("pokemon") ResultDto pokemon, Model model) {
 		this.species = new ArrayList<Species>();
 		EvolvesToDto EvolvesToDto = this.pokemonService.getEvolvesToDto(pokemon.getUrl());
-		log.info("url {}",pokemon.getUrl());
+		log.info("url {}", pokemon.getUrl());
 
-		this.species=getEvo(EvolvesToDto.getChain().getEvolves_to());
-		
-		model.addAttribute("especie",EvolvesToDto.getChain().getSpecies());
-		
-		model.addAttribute("especies",this.species);
-		log.info("especies {}",species.toString());
-		//model.addAttribute("chain",EvolvesToDto.getChain());
+		this.species = getEvo(EvolvesToDto.getChain().getEvolves_to());
+
+		model.addAttribute("especie", EvolvesToDto.getChain().getSpecies());
+
+		model.addAttribute("especies", this.species);
+		log.info("especies {}", species.toString());
+		// model.addAttribute("chain",EvolvesToDto.getChain());
 		return "verespecimenes";
 	}
 
-	private List<Species> getEvo(List<EvolvesTo>ev) {
-		
-		if(ev.size()>0) {
-			for(EvolvesTo evt:ev) {
+	private List<Species> getEvo(List<EvolvesTo> ev) {
+
+		if (ev.size() > 0) {
+			for (EvolvesTo evt : ev) {
 				this.species.add(evt.getSpecies());
 				getEvo(evt.getEvolves_to());
-				//log.info("especies {}",species);
-			
+				// log.info("especies {}",species);
+
 			}
 		}
 		return this.species;
-		
-		
+
 	}
-	
+
 }
