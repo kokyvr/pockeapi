@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.pokedex.dto.PaginationDto;
 import com.pokedex.dto.PokemonSpeciesDto;
 import com.pokedex.service.PokemonService;
-import com.pokedex.service.impl.PokemonServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -59,8 +58,6 @@ public class PokemonController {
 		model.addAttribute("pokemons",pokemonDto.getResults());
 		model.addAttribute("count",pokemonDto.getResults().size());
 		model.addAttribute("paginationDto",paginationDto);
-		//model.addAttribute("paginationDto",pokemonDto.getPrevious());
-		//model.addAttribute("next",pokemonDto.getNext());
 		return "listPokemons";
 	}
 	
